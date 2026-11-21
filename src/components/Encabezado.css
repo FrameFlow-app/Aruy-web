@@ -1,0 +1,27 @@
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: var(--e-m);
+  min-height: 64px;
+}
+
+.encabezado__titulo {
+  flex: 1;
+  min-width: 0;
+  font-size: 26px;
+  line-height: 30px;
+}
+
+.encabezado__atras {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--toque);
+  height: var(--toque);
+  margin-left: calc(var(--e-s) * -1);
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-high);
+  color: var(--on-surface);
+  cursor: pointer;
+}

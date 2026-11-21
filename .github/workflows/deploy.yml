@@ -1,0 +1,50 @@
+name: Construir y publicar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+        env:
+          VITE_API_URL: https://aruy-api.onrender.com
+      # Por si acaso: con HashRouter no hace falta, pero Pages sirve este archivo ante una ruta desconocida.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          path: dist
+
+  publicar:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: construir
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - id: despliegue
+        uses: actions/deploy-pages@v4

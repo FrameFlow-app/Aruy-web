@@ -1,0 +1,141 @@
+/* Detalle de servicio y perfil del prestador. */
+
+.detalle__cabeza {
+  display: grid;
+  gap: var(--e-s);
+}
+
+.detalle__titulo {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.detalle__precio {
+  color: var(--primary);
+  font-family: var(--fuente-titulos);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.detalle__pastillas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-s) var(--e-m);
+}
+
+.detalle__prestador {
+  display: flex;
+  align-items: center;
+  gap: var(--e-l);
+  min-height: 72px;
+  padding: var(--e-m) var(--e-l);
+  border-radius: var(--r-l);
+  background: var(--surface-low);
+  box-shadow: var(--sombra-suave);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.detalle__prestador:active {
+  background: var(--surface-container);
+}
+
+.detalle__prestador-texto {
+  display: grid;
+  min-width: 0;
+  line-height: 22px;
+}
+
+.detalle__prestador-texto strong {
+  font-family: var(--fuente-titulos);
+  font-size: 18px;
+}
+
+.detalle__prestador-texto span {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+}
+
+.detalle__seccion {
+  display: grid;
+  gap: var(--e-m);
+}
+
+.detalle__seccion h2 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.detalle__descripcion {
+  max-width: 62ch;
+  white-space: pre-line;
+}
+
+.detalle__datos {
+  display: grid;
+  gap: var(--e-xs);
+  margin: 0;
+}
+
+.detalle__datos div {
+  display: flex;
+  gap: var(--e-s);
+}
+
+.detalle__datos dt {
+  font-weight: 700;
+}
+
+.detalle__datos dt::after {
+  content: ':';
+}
+
+.detalle__datos dd {
+  margin: 0;
+}
+
+.detalle__ver-mas {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque);
+  font-weight: 700;
+}
+
+.detalle__nota {
+  text-align: center;
+}
+
+/* ---- Perfil del prestador ---- */
+.perfil__cabeza {
+  display: grid;
+  gap: var(--e-m);
+  padding: var(--e-xl);
+  border-radius: var(--r-xl);
+  background: var(--surface-low);
+  box-shadow: var(--sombra-suave);
+}
+
+.perfil__quien {
+  display: flex;
+  align-items: center;
+  gap: var(--e-l);
+}
+
+.perfil__nombre {
+  font-size: 26px;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+}
+
+.perfil__oficio {
+  color: var(--on-surface-variant);
+}
+
+.perfil__sobre {
+  max-width: 62ch;
+  white-space: pre-line;
+}
