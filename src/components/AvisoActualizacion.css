@@ -1,0 +1,39 @@
+.actualizacion {
+  position: fixed;
+  z-index: 90;
+  left: var(--e-l);
+  right: var(--e-l);
+  top: calc(var(--e-m) + var(--inset-arriba));
+  max-width: 528px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-m);
+  padding: var(--e-s) var(--e-s) var(--e-s) var(--e-xl);
+  border-radius: var(--r-l);
+  background: var(--on-surface);
+  color: var(--surface);
+  box-shadow: var(--sombra);
+  font-weight: 700;
+}
+
+.actualizacion__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--e-xs);
+}
+
+.actualizacion .boton {
+  min-height: var(--toque);
+  padding: 0 var(--e-l);
+}
+
+.actualizacion .boton--texto {
+  color: var(--surface);
+}
+
+.actualizacion .boton--primario {
+  background: var(--maiz);
+  color: var(--anil-noche);
+}

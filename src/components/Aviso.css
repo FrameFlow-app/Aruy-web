@@ -1,0 +1,33 @@
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--e-m);
+  padding: var(--e-m) var(--e-l);
+  border-radius: var(--r-m);
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.aviso > svg {
+  flex: none;
+}
+
+.aviso__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.aviso--info {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.aviso--error {
+  background: var(--error-container);
+  color: var(--on-error-container);
+}
+
+.aviso--exito {
+  background: var(--ok-container);
+  color: var(--on-ok-container);
+}

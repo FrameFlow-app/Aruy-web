@@ -1,0 +1,157 @@
+.galeria {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: var(--primary-container);
+  aspect-ratio: 4 / 3.2;
+}
+
+.galeria--vacia {
+  display: grid;
+  place-items: center;
+  color: var(--on-primary-container);
+}
+
+.galeria__pista {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.galeria__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.galeria__foto {
+  flex: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.galeria__foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.galeria__puntos {
+  position: absolute;
+  left: 50%;
+  bottom: var(--e-m);
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--r-pildora);
+  background: rgba(10, 12, 36, 0.45);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.galeria__punto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transition: width 160ms ease, background-color 160ms ease;
+}
+
+.galeria__punto--activo {
+  width: 18px;
+  border-radius: var(--r-pildora);
+  background: #fff;
+}
+
+/* Texto para lectores de pantalla: el contador visual son los puntos. */
+.galeria__contador,
+.visor__contador {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.galeria__contador {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ---- Visor a pantalla completa ---- */
+.visor {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(8, 9, 28, 0.96);
+  color: #fff;
+}
+
+.visor::backdrop {
+  background: rgba(8, 9, 28, 0.96);
+}
+
+.visor__pista {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.visor__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.visor__pagina {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.visor__pagina img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.visor__cerrar {
+  position: absolute;
+  top: calc(var(--e-m) + var(--inset-arriba));
+  right: var(--e-m);
+  display: grid;
+  place-items: center;
+  width: var(--toque);
+  height: var(--toque);
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+}
+
+.visor__contador {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--e-l) + var(--inset-abajo));
+  text-align: center;
+}

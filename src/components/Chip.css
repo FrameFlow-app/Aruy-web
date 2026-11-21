@@ -1,0 +1,23 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-s);
+  min-height: var(--toque);
+  padding: 0 var(--e-l);
+  border: 0;
+  border-radius: var(--r-pildora);
+  background: var(--surface-high);
+  color: var(--on-surface);
+  font-family: var(--fuente-texto);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.chip--activo {
+  background: var(--primary);
+  color: var(--on-primary);
+}

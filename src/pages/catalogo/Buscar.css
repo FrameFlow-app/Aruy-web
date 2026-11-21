@@ -1,0 +1,136 @@
+.buscar__campo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--on-surface-variant);
+}
+
+.buscar__campo > svg {
+  position: absolute;
+  left: var(--e-l);
+  pointer-events: none;
+}
+
+.buscar__input {
+  width: 100%;
+  min-height: var(--altura-boton);
+  padding: 0 calc(var(--toque) + var(--e-xs)) 0 52px;
+  border: 0;
+  border-radius: var(--r-pildora);
+  background: var(--surface-container);
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+  color: var(--on-surface);
+  appearance: none;
+}
+
+.buscar__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.buscar__input::placeholder {
+  color: var(--outline);
+}
+
+.buscar__input:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.buscar__borrar {
+  position: absolute;
+  right: var(--e-xs);
+  display: grid;
+  place-items: center;
+  width: var(--toque);
+  height: var(--toque);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+}
+
+.buscar__categorias {
+  display: flex;
+  gap: var(--e-s);
+  margin: 0 calc(var(--e-xl) * -1);
+  padding: 0 var(--e-xl);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.buscar__categorias::-webkit-scrollbar {
+  display: none;
+}
+
+.buscar__filtros-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-s);
+  min-height: var(--toque);
+  padding: 0 var(--e-m) 0 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.buscar__panel {
+  display: grid;
+  gap: var(--e-l);
+  margin-top: var(--e-s);
+  padding: var(--e-l);
+  border-radius: var(--r-l);
+  background: var(--surface-low);
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+}
+
+.buscar__grupo {
+  display: grid;
+  gap: var(--e-s);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 15px;
+}
+
+.buscar__grupo legend {
+  padding: 0;
+  margin-bottom: var(--e-s);
+  font-weight: 700;
+}
+
+.buscar__fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-s);
+}
+
+.buscar__rango {
+  width: 100%;
+  height: var(--toque);
+  accent-color: var(--primary);
+}
+
+.buscar__interruptor {
+  display: flex;
+  align-items: center;
+  gap: var(--e-m);
+  min-height: var(--toque);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.buscar__interruptor input {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--primary);
+}
+
+.buscar__conteo {
+  margin-bottom: calc(var(--e-s) * -1);
+  font-weight: 700;
+}

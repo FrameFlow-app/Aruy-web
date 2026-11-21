@@ -1,0 +1,10 @@
+.logo {
+  display: block;
+  overflow: visible;
+}
+
+.logo--fondo {
+  background: var(--anil);
+  border-radius: 24%;
+  padding: 0;
+}

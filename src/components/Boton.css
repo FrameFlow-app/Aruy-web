@@ -1,0 +1,73 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-s);
+  min-height: var(--altura-boton);
+  min-width: var(--toque);
+  padding: 0 var(--e-xxl);
+  border: 0;
+  border-radius: var(--r-pildora);
+  font-family: var(--fuente-texto);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 18px;
+  cursor: pointer;
+  transition: transform 120ms ease, background-color 160ms ease, opacity 160ms ease;
+  touch-action: manipulation;
+}
+
+.boton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.boton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.boton--grande {
+  min-height: var(--altura-boton-grande);
+}
+
+.boton--ancho {
+  width: 100%;
+}
+
+.boton--primario {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.boton--secundario {
+  background: transparent;
+  color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+}
+
+.boton--texto {
+  background: transparent;
+  color: var(--primary);
+  padding: 0 var(--e-l);
+  min-height: var(--toque);
+}
+
+.boton--peligro {
+  background: var(--error);
+  color: var(--on-error);
+}
+
+.boton__giro {
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: boton-giro 800ms linear infinite;
+}
+
+@keyframes boton-giro {
+  to {
+    transform: rotate(360deg);
+  }
+}

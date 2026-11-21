@@ -1,0 +1,15 @@
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-l);
+  width: 100%;
+  max-width: var(--ancho-contenido);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(var(--e-l) + var(--inset-arriba)) calc(var(--e-xl) + var(--inset-der)) calc(var(--e-xxxl) + var(--inset-abajo))
+    calc(var(--e-xl) + var(--inset-izq));
+}
+
+.pantalla--con-barra {
+  padding-bottom: calc(112px + var(--inset-abajo));
+}

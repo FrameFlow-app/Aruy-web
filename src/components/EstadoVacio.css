@@ -1,0 +1,22 @@
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--e-m);
+  padding: var(--e-xxxl) var(--e-xl);
+  text-align: center;
+}
+
+.vacio__icono {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.vacio .texto-suave {
+  max-width: 34ch;
+}

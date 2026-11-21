@@ -1,0 +1,52 @@
+.barra {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: var(--e-m) calc(var(--e-l) + var(--inset-der)) calc(var(--e-m) + var(--inset-abajo)) calc(var(--e-l) + var(--inset-izq));
+  pointer-events: none;
+}
+
+.barra__lista {
+  display: flex;
+  gap: var(--e-xs);
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+  padding: var(--e-xs);
+  list-style: none;
+  border-radius: var(--r-pildora);
+  background: var(--surface-low);
+  box-shadow: var(--sombra);
+  pointer-events: auto;
+}
+
+.barra__lista li {
+  flex: 1;
+  min-width: 0;
+}
+
+.barra__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: var(--e-s) var(--e-xs);
+  border-radius: var(--r-pildora);
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-decoration: none;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.barra__item--activo {
+  background: var(--primary);
+  color: var(--on-primary);
+}
