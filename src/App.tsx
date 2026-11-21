@@ -11,6 +11,13 @@ import { Ingresar } from './pages/cuenta/Ingresar'
 import { Olvide } from './pages/cuenta/Olvide'
 import { Registro } from './pages/cuenta/Registro'
 import { Instalar } from './pages/Instalar'
+import { Chat } from './pages/solicitudes/Chat'
+import { MisSolicitudes } from './pages/solicitudes/MisSolicitudes'
+import { RutaPrivada } from './features/micuenta/RutaPrivada'
+import { Ajustes } from './pages/micuenta/Ajustes'
+import { EditarPerfil } from './pages/micuenta/EditarPerfil'
+import { MiCuenta } from './pages/micuenta/MiCuenta'
+import { Permisos } from './pages/micuenta/Permisos'
 
 // HashRouter: GitHub Pages no sabe reescribir rutas, y asi tampoco hace falta un 404 especial.
 export default function App() {
@@ -29,6 +36,14 @@ export default function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/olvide" element={<Olvide />} />
           <Route path="/instalar" element={<Instalar />} />
+          <Route path="/solicitudes" element={<MisSolicitudes />} />
+          <Route path="/solicitudes/:id" element={<Chat />} />
+          <Route element={<RutaPrivada />}>
+            <Route path="/cuenta" element={<MiCuenta />} />
+            <Route path="/cuenta/editar" element={<EditarPerfil />} />
+            <Route path="/cuenta/ajustes" element={<Ajustes />} />
+            <Route path="/cuenta/permisos" element={<Permisos />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </SesionProvider>

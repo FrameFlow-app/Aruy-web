@@ -10,15 +10,17 @@ interface Props {
   volverA?: string
   /** Muestra la barra inferior flotante (pantallas principales). */
   conBarra?: boolean
+  /** Acciones a la derecha del encabezado (campana, foto…). */
+  accion?: ReactNode
   children?: ReactNode
 }
 
 /** Contenedor de pantalla: respeta las zonas seguras de iPhone y deja sitio a la barra flotante. */
-export function Pantalla({ titulo, atras, volverA, conBarra = false, children }: Props) {
+export function Pantalla({ titulo, atras, volverA, conBarra = false, accion, children }: Props) {
   return (
     <>
       <main className={`pantalla ${conBarra ? 'pantalla--con-barra' : ''}`}>
-        <Encabezado titulo={titulo} atras={atras} volverA={volverA} />
+        <Encabezado titulo={titulo} atras={atras} volverA={volverA} accion={accion} />
         {children}
       </main>
       {conBarra && <BarraInferior />}

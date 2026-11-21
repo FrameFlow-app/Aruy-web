@@ -1,9 +1,12 @@
 import { peticion } from './api'
 import type {
   Avisos,
+  CambiosPerfilPropio,
+  CambiosUsuario,
   Calificaciones,
   FotoServicio,
   Mensaje,
+  PerfilPropio,
   PerfilPublico,
   RespuestaAuth,
   Servicio,
@@ -53,3 +56,21 @@ export const calificaciones = (perfilPrestadorId: string) =>
     `/calificaciones?perfil_prestador_id=${encodeURIComponent(perfilPrestadorId)}`,
     { token: null },
   )
+
+// Mi cuenta (con token de la sesion)
+export const miUsuario = () => peticion<Usuario>('/usuarios/yo')
+
+export const editarMiUsuario = (cambios: CambiosUsuario) =>
+  peticion<Usuario>('/usuarios/yo', { metodo: 'PATCH', cuerpo: cambios })
+
+/** La imagen va cruda (no multipart), con su Content-Type real: image/jpeg, image/png o image/webp. */
+export const subirMiFoto = (imagen: Blob) =>
+  peticion<Usuario>('/usuarios/yo/foto', { metodo: 'POST', binario: imagen })
+
+/** Borrado real de la cuenta y sus datos. Responde 204. */
+export const eliminarMiCuenta = () => peticion<null>('/usuarios/yo', { metodo: 'DELETE' })
+
+export const miPerfilPrestador = () => peticion<PerfilPropio>('/perfiles/yo')
+
+export const editarMiPerfilPrestador = (cambios: CambiosPerfilPropio) =>
+  peticion<PerfilPropio>('/perfiles/yo', { metodo: 'PATCH', cuerpo: cambios })

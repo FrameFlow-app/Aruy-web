@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSesion } from '../../api/SesionContexto'
 import * as endpoints from '../../api/endpoints'
 import type { Calificaciones, FotoServicio, PerfilPublico, Servicio } from '../../api/tipos'
-import { Aviso } from '../../components/Aviso'
 import { Avatar } from '../../components/Avatar'
 import { Boton } from '../../components/Boton'
 import { EstadoVacio } from '../../components/EstadoVacio'
@@ -15,6 +14,7 @@ import { Calificacion, Pastilla, SelloVerificado } from '../../features/catalogo
 import { IconoEnviar } from '../../features/catalogo/iconos'
 import { Opiniones } from '../../features/catalogo/Opiniones'
 import { useCarga } from '../../features/catalogo/useCarga'
+import { HojaNuevaSolicitud } from '../../features/solicitudes/HojaNuevaSolicitud'
 import { Pantalla } from '../Pantalla'
 import './Detalle.css'
 
@@ -41,7 +41,8 @@ export function DetalleServicio() {
   const { id = '' } = useParams()
   const { sesion } = useSesion()
   const navegar = useNavigate()
-  const [pronto, setPronto] = useState(false)
+  const [hojaAbierta, setHojaAbierta] = useState(false)
+  const cerrarHoja = useCallback(() => setHojaAbierta(false), [])
   const detalle = useCarga(`servicio:${id}`, () => cargarDetalle(id))
 
   if (detalle.cargando) {
@@ -86,7 +87,7 @@ export function DetalleServicio() {
       navegar(`/ingresar?volver=${encodeURIComponent(`/servicio/${servicio.id}`)}`)
       return
     }
-    setPronto(true) // La Entrega 2 abre aquí la solicitud y el chat.
+    setHojaAbierta(true)
   }
 
   return (
@@ -157,13 +158,20 @@ export function DetalleServicio() {
 
       {!esDueno && (
         <div className="accion-fija">
-          {pronto && <Aviso>Muy pronto podrás solicitar desde la web.</Aviso>}
           <Boton grande ancho icono={<IconoEnviar />} onClick={solicitar} disabled={!libre}>
             Solicitar y chatear
           </Boton>
           {!libre && <p className="texto-suave detalle__nota">{nombrePrestador} no recibe solicitudes por ahora.</p>}
         </div>
       )}
+      <HojaNuevaSolicitud
+        abierta={hojaAbierta}
+        onCerrar={cerrarHoja}
+        servicioId={servicio.id}
+        tituloServicio={servicio.titulo}
+        nombrePrestador={nombrePrestador}
+        fotoPrestador={prestador?.foto_perfil}
+      />
     </Pantalla>
   )
 }

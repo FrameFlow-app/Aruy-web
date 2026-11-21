@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useSesion } from '../../api/SesionContexto'
 import { CATEGORIAS, ETIQUETA_CATEGORIA } from '../../api/tipos'
+import { Avatar } from '../../components/Avatar'
 import { Boton } from '../../components/Boton'
 import { IconoBuscar, IconoCategoria } from '../../components/Iconos'
 import { EstadoVacio } from '../../components/EstadoVacio'
@@ -9,9 +10,11 @@ import { cargarCatalogo } from '../../features/catalogo/catalogo'
 import { ErrorReintentar, EsqueletosLista } from '../../features/catalogo/Cargas'
 import { filtrarServicios, FILTROS_VACIOS } from '../../features/catalogo/filtros'
 import { TarjetaServicio } from '../../features/catalogo/TarjetaServicio'
+import { CampanaSolicitudes } from '../../features/solicitudes/CampanaSolicitudes'
 import { useCarga } from '../../features/catalogo/useCarga'
 import { Pantalla } from '../Pantalla'
 import './Inicio.css'
+import '../../features/solicitudes/solicitudes.css'
 
 export function Inicio() {
   const { sesion } = useSesion()
@@ -21,7 +24,25 @@ export function Inicio() {
   const servicios = catalogo.datos ? filtrarServicios(catalogo.datos, FILTROS_VACIOS) : []
 
   return (
-    <Pantalla titulo={primerNombre ? `Hola, ${primerNombre}` : 'Hola'} conBarra>
+    <Pantalla
+      titulo={primerNombre ? `Hola, ${primerNombre}` : 'Hola'}
+      conBarra
+      accion={
+        sesion && (
+          <div className="acciones-cabeza">
+            <CampanaSolicitudes />
+            <button
+              type="button"
+              className="acciones-cabeza__perfil"
+              onClick={() => navegar('/cuenta')}
+              aria-label="Mi cuenta"
+            >
+              <Avatar nombre={sesion.usuario.nombre} fotoUrl={sesion.usuario.foto_perfil} tamano={40} />
+            </button>
+          </div>
+        )
+      }
+    >
       <p className="inicio__pregunta">¿Qué servicio necesitas hoy?</p>
 
       <Link to="/buscar" className="inicio__buscador">

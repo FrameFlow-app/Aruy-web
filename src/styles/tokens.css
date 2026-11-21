@@ -130,3 +130,73 @@
     --sombra-suave: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
 }
+
+/* Tema elegido en Ajustes (data-theme en <html>). Sin atributo manda prefers-color-scheme.
+   Los valores replican los de arriba: claro = :root, oscuro = el bloque de prefers-color-scheme. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --primary: #2b3990;
+  --on-primary: #ffffff;
+  --primary-container: #e0e3ff;
+  --on-primary-container: #0d1558;
+  --secondary: #b0235b;
+  --on-secondary: #ffffff;
+  --secondary-container: #ffd9e5;
+  --on-secondary-container: #4a0522;
+  --warn-container: #ffe6a8;
+  --on-warn-container: #3a2800;
+  --error: #b3261e;
+  --on-error: #ffffff;
+  --error-container: #f9dedc;
+  --on-error-container: #410e0b;
+  --ok: #0b7a5c;
+  --ok-container: #cff3e6;
+  --on-ok-container: #04392a;
+  --estrella: #b26a00;
+  --surface: #f7f6fc;
+  --surface-lowest: #ffffff;
+  --surface-low: #f1f0f9;
+  --surface-container: #ebeaf5;
+  --surface-high: #e4e3f0;
+  --surface-highest: #dddceb;
+  --on-surface: #14173a;
+  --on-surface-variant: #4a4d6b;
+  --outline: #767999;
+  --outline-variant: #c8cae0;
+  --sombra: 0 6px 20px rgba(20, 23, 58, 0.16);
+  --sombra-suave: 0 1px 3px rgba(20, 23, 58, 0.12);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --primary: #bac3ff;
+  --on-primary: #0e1766;
+  --primary-container: #2b3990;
+  --on-primary-container: #dee1ff;
+  --secondary: #ffb1ca;
+  --on-secondary: #5f0f33;
+  --secondary-container: #7e1a45;
+  --on-secondary-container: #ffd9e5;
+  --warn-container: #5c4300;
+  --on-warn-container: #ffe0a0;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --ok: #6fd9b6;
+  --ok-container: #0d4d3b;
+  --on-ok-container: #cff3e6;
+  --estrella: #f2b52e;
+  --surface: #101331;
+  --surface-lowest: #0b0d25;
+  --surface-low: #161a3d;
+  --surface-container: #1b1f47;
+  --surface-high: #252a55;
+  --surface-highest: #30355f;
+  --on-surface: #e5e6fa;
+  --on-surface-variant: #bdc0dd;
+  --outline: #8e91b1;
+  --outline-variant: #3b4069;
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --sombra-suave: 0 1px 3px rgba(0, 0, 0, 0.5);
+}

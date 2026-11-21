@@ -144,3 +144,30 @@ export interface Avisos {
 export function esCategoria(valor: string): valor is Categoria {
   return (CATEGORIAS as readonly string[]).includes(valor)
 }
+
+/** Mi perfil de prestador (GET /perfiles/yo). El WhatsApp sale del telefono de la cuenta, no se edita. */
+export interface PerfilPropio {
+  id: string
+  usuario_id: string
+  oficio_principal: string | null
+  descripcion_profesional: string | null
+  zona_cobertura: string | null
+  anios_experiencia: number | null
+  disponible: boolean
+}
+
+/** Campos editables con PATCH /perfiles/yo. */
+export interface CambiosPerfilPropio {
+  oficio_principal?: string
+  zona_cobertura?: string
+  descripcion_profesional?: string | null
+  anios_experiencia?: number | null
+  disponible?: boolean
+}
+
+/** Campos editables con PATCH /usuarios/yo; `foto_perfil: null` quita la foto. */
+export interface CambiosUsuario {
+  nombre?: string
+  telefono?: string
+  foto_perfil?: null
+}
