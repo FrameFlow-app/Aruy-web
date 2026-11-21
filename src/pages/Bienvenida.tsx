@@ -1,10 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Aviso } from '../components/Aviso'
 import { Boton } from '../components/Boton'
 import { Logo } from '../components/Logo'
 import './Bienvenida.css'
 
 export function Bienvenida() {
   const navegar = useNavigate()
+  const eliminada = (useLocation().state as { cuentaEliminada?: boolean } | null)?.cuentaEliminada === true
   return (
     <main className="bienvenida">
       <div className="bienvenida__marca">
@@ -18,6 +20,7 @@ export function Bienvenida() {
         <p>Plomeros, electricistas, pintores y más, cerca de ti.</p>
       </div>
       <div className="bienvenida__acciones">
+        {eliminada && <Aviso tipo="exito">Eliminamos tu cuenta y tus datos. Gracias por haber usado Aruy.</Aviso>}
         <Boton grande ancho className="bienvenida__principal" onClick={() => navegar('/inicio')}>
           Ver servicios
         </Boton>

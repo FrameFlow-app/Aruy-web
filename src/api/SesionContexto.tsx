@@ -11,13 +11,15 @@ import {
   tokenVencido,
   type Sesion,
 } from './sesion'
-import type { RespuestaAuth } from './tipos'
+import type { RespuestaAuth, Usuario } from './tipos'
 
 interface ValorSesion {
   sesion: Sesion | null
   /** Guarda la respuesta de login/registro. */
   iniciar: (r: RespuestaAuth) => void
   cerrar: () => void
+  /** Actualiza el usuario guardado (tras editar nombre, telefono o foto). */
+  actualizarUsuario: (usuario: Usuario) => void
 }
 
 const Contexto = createContext<ValorSesion | null>(null)
@@ -72,7 +74,18 @@ export function SesionProvider({ children }: { children: ReactNode }) {
       })
   }, [cerrar])
 
-  const valor = useMemo(() => ({ sesion, iniciar, cerrar }), [sesion, iniciar, cerrar])
+  const actualizarUsuario = useCallback((usuario: Usuario) => {
+    setSesion((actual) => {
+      if (!actual) return actual
+      // El correo solo viene en GET /usuarios/yo: se conserva si la respuesta no lo trae.
+      return guardarSesion({ ...actual, usuario: { ...actual.usuario, ...usuario } })
+    })
+  }, [])
+
+  const valor = useMemo(
+    () => ({ sesion, iniciar, cerrar, actualizarUsuario }),
+    [sesion, iniciar, cerrar, actualizarUsuario],
+  )
   return <Contexto.Provider value={valor}>{children}</Contexto.Provider>
 }
 
