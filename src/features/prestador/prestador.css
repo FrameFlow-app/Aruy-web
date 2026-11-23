@@ -1,0 +1,371 @@
+/* Panel, Ofrecer y Aruy Pro. Reutiliza .mc-interruptor y .mc-fila de micuenta.css. */
+
+.pn-columna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-xl);
+}
+
+.pn-subtitulo {
+  margin-top: calc(var(--e-m) * -1);
+  color: var(--on-surface-variant);
+  font-size: 18px;
+  line-height: 24px;
+}
+
+/* ---- Recibir solicitudes: el estado más importante del panel ---- */
+.mc-interruptor.pn-disp {
+  min-height: 80px;
+  padding: var(--e-l) var(--e-xl);
+  border-radius: var(--r-l);
+  background: var(--surface-container);
+  transition: background-color 200ms ease;
+}
+
+.mc-interruptor.pn-disp--on {
+  background: var(--ok-container);
+  box-shadow: none;
+  color: var(--on-ok-container);
+}
+
+.mc-interruptor.pn-disp--on .mc-fila__detalle {
+  color: inherit;
+}
+
+.mc-interruptor.pn-disp--on input:checked + .mc-interruptor__pista {
+  background: var(--ok);
+}
+
+.pn-disp .mc-fila__titulo {
+  font-family: var(--fuente-titulos);
+  font-size: 20px;
+  line-height: 26px;
+}
+
+/* ---- Tarjetas con título y acción ---- */
+.pn-bloque {
+  display: grid;
+  justify-items: start;
+  gap: var(--e-s);
+}
+
+.pn-bloque h2 {
+  color: inherit;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.pn-bloque .boton {
+  margin-top: var(--e-xs);
+}
+
+/* ---- Hilo de progreso: un pespunte que se va llenando ---- */
+.pn-progreso {
+  display: grid;
+  gap: var(--e-m);
+}
+
+.pn-progreso__cabeza {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e-m);
+}
+
+.pn-progreso__cabeza h2 {
+  color: inherit;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.pn-hilo {
+  position: relative;
+  height: 6px;
+  border-radius: var(--r-pildora);
+  background: repeating-linear-gradient(
+    90deg,
+    color-mix(in srgb, currentColor 40%, transparent) 0 10px,
+    transparent 10px 16px
+  );
+}
+
+.pn-hilo__lleno {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--r-pildora);
+  background: currentColor;
+  transition: width 400ms ease;
+}
+
+.pn-pasos {
+  display: grid;
+  gap: var(--e-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pn-paso {
+  display: flex;
+  align-items: center;
+  gap: var(--e-s);
+  min-height: 32px;
+}
+
+.pn-paso__marca {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.pn-paso--hecho .pn-paso__marca {
+  background: currentColor;
+}
+
+.pn-paso--hecho .pn-paso__marca svg {
+  color: var(--primary-container);
+}
+
+/* ---- Tus servicios ---- */
+.pn-seccion {
+  display: grid;
+  gap: var(--e-m);
+}
+
+.pn-seccion__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-m);
+}
+
+.pn-seccion__cabeza h2 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.pn-enlace {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque);
+  padding: 0 var(--e-s);
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pn-enlace:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--r-s);
+}
+
+.pn-lista {
+  display: grid;
+  gap: var(--e-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pn-servicio {
+  display: flex;
+  align-items: center;
+  gap: var(--e-l);
+  min-height: 96px;
+  padding: var(--e-m);
+  border-radius: var(--r-l);
+  background: var(--surface-low);
+  box-shadow: var(--sombra-suave);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.pn-servicio:active {
+  background: var(--surface-container);
+}
+
+.pn-servicio:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pn-servicio__foto {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: var(--r-m);
+}
+
+.pn-servicio__texto {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.pn-servicio__titulo {
+  overflow: hidden;
+  font-size: 17px;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pn-servicio__detalle {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.pn-servicio__estado {
+  justify-self: start;
+  margin-top: var(--e-xs);
+}
+
+/* ---- Enlace a Aruy Pro ---- */
+.pn-pro {
+  display: flex;
+  align-items: center;
+  gap: var(--e-l);
+  min-height: 72px;
+  padding: var(--e-m) var(--e-l);
+  border-radius: var(--r-l);
+  background: var(--surface-low);
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.pn-pro:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pn-pro__icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--tertiary);
+  color: var(--on-tertiary);
+}
+
+.pn-pro__texto {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+}
+
+.pn-pro__texto strong {
+  line-height: 22px;
+}
+
+.pn-pro__texto span {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ---- Ofrecer servicios ---- */
+.of-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-s);
+}
+
+.of-error {
+  margin: calc(var(--e-xs) * -1) 0 0;
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+/* ---- Aruy Pro ---- */
+.pro-plan {
+  display: flex;
+  align-items: center;
+  gap: var(--e-l);
+  min-height: 80px;
+  padding: var(--e-m) var(--e-xl);
+  border-radius: var(--r-l);
+  background: var(--surface-low);
+  box-shadow: inset 0 0 0 1px var(--outline-variant);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.pro-plan:has(input:checked) {
+  background: var(--primary-container);
+  box-shadow: inset 0 0 0 2px var(--primary);
+  color: var(--on-primary-container);
+}
+
+.pro-plan:has(input:focus-visible) {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pro-plan input {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+.pro-plan__texto {
+  flex: 1;
+  display: grid;
+}
+
+.pro-plan__texto strong {
+  font-family: var(--fuente-titulos);
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.pro-plan__dias {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.pro-actual {
+  display: grid;
+  gap: var(--e-s);
+}
+
+.pro-actual__cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-m);
+}
+
+.pro-actual__cabeza h2 {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.pro-actual p {
+  margin: 0;
+}
+
+.pro-actual .boton {
+  margin-top: var(--e-s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pn-hilo__lleno,
+  .mc-interruptor.pn-disp {
+    transition: none;
+  }
+}

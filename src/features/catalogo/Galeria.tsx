@@ -79,7 +79,7 @@ interface PropsVisor {
   onCerrar: () => void
 }
 
-function Visor({ fotos, inicial, titulo, onCerrar }: PropsVisor) {
+export function Visor({ fotos, inicial, titulo, onCerrar }: PropsVisor) {
   const dialogo = useRef<HTMLDialogElement>(null)
   const pista = useRef<HTMLDivElement>(null)
   const [actual, setActual] = useState(inicial)

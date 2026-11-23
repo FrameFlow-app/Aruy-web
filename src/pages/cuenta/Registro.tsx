@@ -8,6 +8,7 @@ import { Aviso } from '../../components/Aviso'
 import { Boton } from '../../components/Boton'
 import { Campo } from '../../components/Campo'
 import { Chip } from '../../components/Chip'
+import { destinoTrasAcceso } from '../../features/prestador/rutas'
 import { mensajeDeError, useEnfocarPrimerError } from './ayudas'
 import { CampoSelect } from './CampoSelect'
 import { PantallaCuenta, Pasos } from './comun'
@@ -88,7 +89,7 @@ export function Registro() {
     try {
       const r = await endpoints.registro(datos)
       iniciar(r)
-      navegar(destino, { replace: true })
+      navegar(destinoTrasAcceso(r.usuario.rol, parametros.get('volver')), { replace: true })
     } catch (err) {
       setCargando(false)
       // El backend dice cual dato esta repetido o es invalido; se marca en su campo.

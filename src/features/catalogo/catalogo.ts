@@ -49,3 +49,10 @@ export async function cargarPortada(servicioId: string): Promise<string | null> 
     return null
   }
 }
+
+/** Olvida el catálogo y las portadas guardadas: se llama tras crear, editar o borrar servicios y fotos. */
+export function invalidarCatalogo(servicioId?: string): void {
+  cache = null
+  if (servicioId) portadas.delete(servicioId)
+  else portadas.clear()
+}

@@ -6,6 +6,7 @@ import { Boton } from '../../components/Boton'
 import { Campo } from '../../components/Campo'
 import { mensajeDeError, useEnfocarPrimerError } from './ayudas'
 import { PantallaCuenta } from './comun'
+import { estadoInicialOlvide, guardarOlvide, limpiarOlvide } from './olvideEstado'
 import { LARGO_CODIGO, validarCodigo, validarConfirmacion, validarCorreo, validarPassword } from './validar'
 
 const ESPERA_REENVIO_S = 60
@@ -17,8 +18,10 @@ export function Olvide() {
   const ubicacion = useLocation()
   const correoPrevio = (ubicacion.state as { email?: string } | null)?.email ?? ''
 
-  const [paso, setPaso] = useState<Paso>('correo')
-  const [correo, setCorreo] = useState(correoPrevio)
+  // Si se recarga en el paso 2 se retoma ahí (solo paso y correo; nunca el código ni la contraseña).
+  const [inicial] = useState(() => estadoInicialOlvide(correoPrevio))
+  const [paso, setPaso] = useState<Paso>(inicial.paso)
+  const [correo, setCorreo] = useState(inicial.email)
   const [codigo, setCodigo] = useState('')
   const [password, setPassword] = useState('')
   const [confirmar, setConfirmar] = useState('')
@@ -37,6 +40,11 @@ export function Olvide() {
   }, [espera])
 
   const correoLimpio = correo.trim().toLowerCase()
+
+  useEffect(() => {
+    if (paso === 'listo') limpiarOlvide()
+    else guardarOlvide({ paso, email: correoLimpio })
+  }, [paso, correoLimpio])
 
   const pedirCodigo = async (reenvio = false) => {
     setFallo(null)

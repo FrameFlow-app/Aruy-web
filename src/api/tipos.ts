@@ -171,3 +171,15 @@ export interface CambiosUsuario {
   telefono?: string
   foto_perfil?: null
 }
+
+/** Cuerpo de POST /servicios (el backend normaliza el título; usa siempre el devuelto). */
+export interface NuevoServicio {
+  titulo: string
+  descripcion: string
+  categoria: Categoria
+  precio_referencial: number | null
+  disponible: boolean
+}
+
+/** Campos editables con PATCH /servicios/:id; `precio_referencial: null` borra el precio. */
+export type CambiosServicio = Partial<NuevoServicio>

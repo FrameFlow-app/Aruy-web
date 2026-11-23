@@ -14,7 +14,25 @@ export interface Filtros {
   /** null = sin límite. */
   precioMax: number | null
   soloDisponibles: boolean
+  /** 0 = todas; 4 = «4 o más»; 4,5 = «4,5 o más». */
+  calificacionMin: number
+  soloVerificados: boolean
+  orden: Orden
 }
+
+export type Orden = 'calificacion' | 'precio' | 'alfabetico'
+
+export const ORDENES: readonly { valor: Orden; etiqueta: string; descripcion: string }[] = [
+  { valor: 'calificacion', etiqueta: 'Mejor calificación', descripcion: 'Las mejores opiniones primero' },
+  { valor: 'precio', etiqueta: 'Menor precio', descripcion: 'Desde el precio referencial más bajo' },
+  { valor: 'alfabetico', etiqueta: 'Orden alfabético', descripcion: 'De la A a la Z por título' },
+]
+
+export const CALIFICACIONES_MIN = [
+  { valor: 0, etiqueta: 'Todas' },
+  { valor: 4, etiqueta: '4 o más' },
+  { valor: 4.5, etiqueta: '4,5 o más' },
+] as const
 
 export const FILTROS_VACIOS: Filtros = {
   texto: '',
@@ -22,6 +40,9 @@ export const FILTROS_VACIOS: Filtros = {
   zona: null,
   precioMax: null,
   soloDisponibles: false,
+  calificacionMin: 0,
+  soloVerificados: false,
+  orden: 'calificacion',
 }
 
 export const ZONAS = ['Norte', 'Centro', 'Sur', 'Valles'] as const
@@ -69,8 +90,21 @@ function coincide(item: ServicioConPrestador, palabras: string[]): boolean {
   )
 }
 
-/** Mejor calificados primero; a igualdad, más opiniones y luego orden alfabético. */
-function ordenar(items: ServicioConPrestador[]): ServicioConPrestador[] {
+function porTitulo(a: ServicioConPrestador, b: ServicioConPrestador): number {
+  return normalizar(a.servicio.titulo).localeCompare(normalizar(b.servicio.titulo))
+}
+
+/** Por defecto, mejor calificados primero; a igualdad, más opiniones y luego orden alfabético. */
+function ordenar(items: ServicioConPrestador[], orden: Orden): ServicioConPrestador[] {
+  if (orden === 'alfabetico') return [...items].sort(porTitulo)
+  if (orden === 'precio') {
+    // Sin precio (a convenir) va al final.
+    return [...items].sort(
+      (a, b) =>
+        (a.servicio.precio_referencial ?? Number.MAX_VALUE) - (b.servicio.precio_referencial ?? Number.MAX_VALUE) ||
+        porTitulo(a, b),
+    )
+  }
   return [...items].sort((a, b) => {
     const pa = a.prestador?.calificacion_promedio ?? -1
     const pb = b.prestador?.calificacion_promedio ?? -1
@@ -89,31 +123,45 @@ export function filtrarServicios(items: ServicioConPrestador[], filtros: Filtros
     const { servicio, prestador } = item
     if (filtros.categoria && servicio.categoria !== filtros.categoria) return false
     if (zona && !normalizar(prestador?.zona_cobertura ?? '').includes(zona)) return false
+    if (filtros.calificacionMin > 0 && (prestador?.calificacion_promedio ?? 0) < filtros.calificacionMin) return false
     if (filtros.soloDisponibles && !disponibleAhora(item)) return false
+    if (filtros.soloVerificados && !estaVerificado(prestador)) return false
     if (filtros.precioMax !== null && servicio.precio_referencial !== null && servicio.precio_referencial > filtros.precioMax) {
       return false
     }
     if (palabras.length > 0 && !coincide(item, palabras)) return false
     return true
   })
-  return ordenar(resultado)
+  return ordenar(resultado, filtros.orden)
 }
 
-/** Cuántos filtros hay activos (sin contar el texto). */
+/** Cuántos filtros hay activos (sin contar el texto ni el orden). */
 export function cantidadActivos(f: Filtros): number {
-  return [f.categoria !== null, f.zona !== null, f.precioMax !== null, f.soloDisponibles].filter(Boolean).length
+  return [
+    f.categoria !== null,
+    f.zona !== null,
+    f.precioMax !== null,
+    f.calificacionMin > 0,
+    f.soloDisponibles,
+    f.soloVerificados,
+  ].filter(Boolean).length
 }
 
 export function filtrosDesdeQuery(params: URLSearchParams): Filtros {
   const categoria = (params.get('categoria') ?? '').toUpperCase()
   const zona = params.get('zona') ?? ''
   const precio = Number(params.get('precio'))
+  const calificacion = Number(params.get('calif'))
+  const orden = params.get('orden')
   return {
     texto: params.get('q') ?? '',
     categoria: (CATEGORIAS as readonly string[]).includes(categoria) ? categoria : null,
     zona: (ZONAS as readonly string[]).includes(zona) ? zona : null,
     precioMax: Number.isFinite(precio) && precio >= PRECIO_MIN && precio < PRECIO_SIN_LIMITE ? precio : null,
     soloDisponibles: params.get('disponibles') === '1',
+    calificacionMin: CALIFICACIONES_MIN.some((c) => c.valor > 0 && c.valor === calificacion) ? calificacion : 0,
+    soloVerificados: params.get('verificados') === '1',
+    orden: ORDENES.find((o) => o.valor === orden)?.valor ?? 'calificacion',
   }
 }
 
@@ -124,6 +172,9 @@ export function filtrosAQuery(f: Filtros): URLSearchParams {
   if (f.zona) p.set('zona', f.zona)
   if (f.precioMax !== null) p.set('precio', String(f.precioMax))
   if (f.soloDisponibles) p.set('disponibles', '1')
+  if (f.calificacionMin > 0) p.set('calif', String(f.calificacionMin))
+  if (f.soloVerificados) p.set('verificados', '1')
+  if (f.orden !== 'calificacion') p.set('orden', f.orden)
   return p
 }
 

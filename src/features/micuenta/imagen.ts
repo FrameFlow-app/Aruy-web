@@ -21,18 +21,18 @@ export function dimensionesRedimension(ancho: number, alto: number, maximo = LAD
   }
 }
 
-const MENSAJE_NO_IMAGEN = 'Ese archivo no es una imagen. Elige una foto de tu galería o toma una nueva.'
-const MENSAJE_NO_LEGIBLE =
+export const MENSAJE_NO_IMAGEN = 'Ese archivo no es una imagen. Elige una foto de tu galería o toma una nueva.'
+export const MENSAJE_NO_LEGIBLE =
   'No pudimos leer esa foto. Si es un formato poco común (como HEIC), elige otra o haz una captura de pantalla de ella.'
 
-interface Origen {
+export interface Origen {
   fuente: CanvasImageSource
   ancho: number
   alto: number
   liberar: () => void
 }
 
-async function decodificar(archivo: File | Blob): Promise<Origen> {
+export async function decodificar(archivo: File | Blob): Promise<Origen> {
   if (typeof createImageBitmap === 'function') {
     try {
       // 'from-image' aplica la orientación EXIF: las fotos del iPhone no salen giradas.

@@ -6,6 +6,7 @@ import { Aviso } from '../../components/Aviso'
 import { Boton } from '../../components/Boton'
 import { Campo } from '../../components/Campo'
 import { Logo } from '../../components/Logo'
+import { destinoTrasAcceso } from '../../features/prestador/rutas'
 import { mensajeDeError, useEnfocarPrimerError } from './ayudas'
 import { PantallaCuenta } from './comun'
 import { validarCorreo } from './validar'
@@ -44,7 +45,7 @@ export function Ingresar() {
     try {
       const r = await endpoints.login(correo.trim().toLowerCase(), password)
       iniciar(r)
-      navegar(destino, { replace: true })
+      navegar(destinoTrasAcceso(r.usuario.rol, parametros.get('volver')), { replace: true })
     } catch (err) {
       setFallo(mensajeDeError(err))
       setCargando(false)

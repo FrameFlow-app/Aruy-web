@@ -10,6 +10,7 @@ import {
   formatoDinero,
   normalizar,
   textoPrecio,
+  type Filtros,
   type ServicioConPrestador,
 } from './filtros'
 
@@ -92,6 +93,27 @@ describe('filtrarServicios', () => {
   })
 })
 
+describe('filtros de calificación, verificados y orden', () => {
+  it('calificación mínima deja fuera a quien no llega o no tiene perfil', () => {
+    expect(ids(filtrarServicios(catalogo, { ...FILTROS_VACIOS, calificacionMin: 4 }))).toEqual(['b', 'a'])
+    expect(ids(filtrarServicios(catalogo, { ...FILTROS_VACIOS, calificacionMin: 4.5 }))).toEqual(['b'])
+  })
+
+  it('solo verificados', () => {
+    const mezcla: ServicioConPrestador[] = [
+      catalogo[0],
+      { ...catalogo[1], prestador: prestador({ id: 'p2', estado_verificacion: 'PENDIENTE', calificacion_promedio: 4.9 }) },
+      catalogo[2],
+    ]
+    expect(ids(filtrarServicios(mezcla, { ...FILTROS_VACIOS, soloVerificados: true }))).toEqual(['a'])
+  })
+
+  it('ordena por menor precio (a convenir al final) y alfabéticamente', () => {
+    expect(ids(filtrarServicios(catalogo, { ...FILTROS_VACIOS, orden: 'precio' }))).toEqual(['a', 'b', 'c'])
+    expect(ids(filtrarServicios(catalogo, { ...FILTROS_VACIOS, orden: 'alfabetico' }))).toEqual(['b', 'c', 'a'])
+  })
+})
+
 describe('disponibleAhora', () => {
   it('requiere servicio activo y prestador disponible', () => {
     expect(disponibleAhora(catalogo[0])).toBe(true)
@@ -102,9 +124,31 @@ describe('disponibleAhora', () => {
 
 describe('filtros en la URL', () => {
   it('ida y vuelta', () => {
-    const f = { texto: 'tubo roto', categoria: 'PLOMERIA', zona: 'Norte', precioMax: 40, soloDisponibles: true }
+    const f: Filtros = {
+      texto: 'tubo roto',
+      categoria: 'PLOMERIA',
+      zona: 'Norte',
+      precioMax: 40,
+      soloDisponibles: true,
+      calificacionMin: 4.5,
+      soloVerificados: true,
+      orden: 'precio',
+    }
     expect(filtrosDesdeQuery(filtrosAQuery(f))).toEqual(f)
-    expect(cantidadActivos(f)).toBe(4)
+    expect(cantidadActivos(f)).toBe(6)
+  })
+
+  it('sin filtros nuevos la URL queda limpia y se lee el valor por defecto', () => {
+    expect(filtrosAQuery(FILTROS_VACIOS).toString()).toBe('')
+    expect(filtrosDesdeQuery(new URLSearchParams())).toEqual(FILTROS_VACIOS)
+  })
+
+  it('descarta calificación y orden inválidos', () => {
+    const f = filtrosDesdeQuery(new URLSearchParams('calif=3&orden=raro&verificados=si'))
+    expect(f.calificacionMin).toBe(0)
+    expect(f.orden).toBe('calificacion')
+    expect(f.soloVerificados).toBe(false)
+    expect(filtrosDesdeQuery(new URLSearchParams('calif=4')).calificacionMin).toBe(4)
   })
 
   it('ignora valores inválidos y acepta ?categoria= en cualquier caso', () => {
