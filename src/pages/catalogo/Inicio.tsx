@@ -58,6 +58,16 @@ export function Inicio() {
         </Tarjeta>
       )}
 
+      {sesion?.usuario.rol === 'CONTRATANTE' && (
+        <Tarjeta tipo="contorno" className="inicio__invitado">
+          <h2>¿Ofreces un oficio?</h2>
+          <p>Con tu misma cuenta puedes publicar tus servicios y recibir clientes.</p>
+          <Boton variante="secundario" onClick={() => navegar('/ofrecer')}>
+            Quiero ofrecer servicios
+          </Boton>
+        </Tarjeta>
+      )}
+
       <section aria-labelledby="titulo-categorias" className="inicio__seccion">
         <h2 id="titulo-categorias" className="inicio__subtitulo">
           Categorías

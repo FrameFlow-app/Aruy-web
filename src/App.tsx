@@ -18,6 +18,13 @@ import { Ajustes } from './pages/micuenta/Ajustes'
 import { EditarPerfil } from './pages/micuenta/EditarPerfil'
 import { MiCuenta } from './pages/micuenta/MiCuenta'
 import { Permisos } from './pages/micuenta/Permisos'
+import { RutaSoloContratante, RutaSoloPrestador } from './features/prestador/RutasPorRol'
+import { AruyPro } from './pages/prestador/AruyPro'
+import { Ofrecer } from './pages/prestador/Ofrecer'
+import { Panel } from './pages/prestador/Panel'
+import { EditorServicio } from './pages/prestador-servicios/EditorServicio'
+import { MisServicios } from './pages/prestador-servicios/MisServicios'
+import { Portafolio } from './pages/prestador-servicios/Portafolio'
 
 // HashRouter: GitHub Pages no sabe reescribir rutas, y asi tampoco hace falta un 404 especial.
 export default function App() {
@@ -43,6 +50,17 @@ export default function App() {
             <Route path="/cuenta/editar" element={<EditarPerfil />} />
             <Route path="/cuenta/ajustes" element={<Ajustes />} />
             <Route path="/cuenta/permisos" element={<Permisos />} />
+          </Route>
+          <Route element={<RutaSoloPrestador />}>
+            <Route path="/panel" element={<Panel />} />
+            <Route path="/pro" element={<AruyPro />} />
+            <Route path="/servicios" element={<MisServicios />} />
+            <Route path="/servicios/nuevo" element={<EditorServicio />} />
+            <Route path="/servicios/:id/editar" element={<EditorServicio />} />
+            <Route path="/portafolio" element={<Portafolio />} />
+          </Route>
+          <Route element={<RutaSoloContratante />}>
+            <Route path="/ofrecer" element={<Ofrecer />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

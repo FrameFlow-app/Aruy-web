@@ -13,6 +13,7 @@ import {
   IconoSolicitudes,
   IconoTelefono,
 } from '../../features/micuenta/iconos'
+import { IconoOfrecer, IconoPro } from '../../features/prestador/iconos'
 import '../../features/micuenta/micuenta.css'
 import { Pantalla } from '../Pantalla'
 
@@ -81,6 +82,16 @@ export function MiCuenta() {
         <nav aria-label="Opciones de la cuenta">
           <ul className="mc-lista">
             <Fila icono={<IconoSolicitudes />} titulo="Mis solicitudes" a="/solicitudes" />
+            {esPrestador ? (
+              <Fila icono={<IconoPro />} titulo="Aruy Pro" detalle="Suscripción simulada" a="/pro" />
+            ) : (
+              <Fila
+                icono={<IconoOfrecer />}
+                titulo="Quiero ofrecer servicios"
+                detalle="Con esta misma cuenta"
+                a="/ofrecer"
+              />
+            )}
             <Fila icono={<IconoEditar />} titulo="Editar perfil" a="/cuenta/editar" />
             <Fila icono={<IconoAjustes />} titulo="Ajustes" a="/cuenta/ajustes" />
             <Fila icono={<IconoPermisos />} titulo="Permisos y notificaciones" a="/cuenta/permisos" />

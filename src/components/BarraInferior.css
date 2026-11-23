@@ -50,3 +50,14 @@
   background: var(--primary);
   color: var(--on-primary);
 }
+
+/* Cinco pestañas (prestador): texto un poco menor para que quepan en 375 px. */
+.barra__lista--cinco {
+  max-width: 520px;
+}
+
+.barra__lista--cinco .barra__item {
+  padding-inline: 2px;
+  font-size: 12px;
+  line-height: 16px;
+}

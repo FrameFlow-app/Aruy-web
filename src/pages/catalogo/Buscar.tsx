@@ -8,6 +8,8 @@ import { IconoBuscar, IconoCategoria, IconoCerrar } from '../../components/Icono
 import { cargarCatalogo } from '../../features/catalogo/catalogo'
 import { ErrorReintentar, EsqueletosLista } from '../../features/catalogo/Cargas'
 import {
+  CALIFICACIONES_MIN,
+  ORDENES,
   cantidadActivos,
   filtrarServicios,
   filtrosAQuery,
@@ -139,6 +141,21 @@ export function Buscar() {
               />
             </div>
 
+            <fieldset className="buscar__grupo">
+              <legend>Calificación</legend>
+              <div className="buscar__fila">
+                {CALIFICACIONES_MIN.map((c) => (
+                  <Chip
+                    key={c.valor}
+                    seleccionado={filtros.calificacionMin === c.valor}
+                    onClick={() => cambiar({ calificacionMin: c.valor })}
+                  >
+                    {c.etiqueta}
+                  </Chip>
+                ))}
+              </div>
+            </fieldset>
+
             <label className="buscar__interruptor">
               <input
                 type="checkbox"
@@ -147,6 +164,26 @@ export function Buscar() {
               />
               <span>Solo disponibles ahora</span>
             </label>
+
+            <label className="buscar__interruptor">
+              <input
+                type="checkbox"
+                checked={filtros.soloVerificados}
+                onChange={(e) => cambiar({ soloVerificados: e.target.checked })}
+              />
+              <span>Solo cuentas verificadas</span>
+            </label>
+
+            <fieldset className="buscar__grupo">
+              <legend>Ordenar por</legend>
+              <div className="buscar__fila">
+                {ORDENES.map((o) => (
+                  <Chip key={o.valor} seleccionado={filtros.orden === o.valor} onClick={() => cambiar({ orden: o.valor })}>
+                    {o.etiqueta}
+                  </Chip>
+                ))}
+              </div>
+            </fieldset>
           </div>
         )}
       </div>

@@ -2,10 +2,12 @@ import { peticion } from './api'
 import type {
   Avisos,
   CambiosPerfilPropio,
+  CambiosServicio,
   CambiosUsuario,
   Calificaciones,
   FotoServicio,
   Mensaje,
+  NuevoServicio,
   PerfilPropio,
   PerfilPublico,
   RespuestaAuth,
@@ -74,3 +76,21 @@ export const miPerfilPrestador = () => peticion<PerfilPropio>('/perfiles/yo')
 
 export const editarMiPerfilPrestador = (cambios: CambiosPerfilPropio) =>
   peticion<PerfilPropio>('/perfiles/yo', { metodo: 'PATCH', cuerpo: cambios })
+
+// Servicios y fotos del prestador (con token de la sesion)
+export const crearServicio = (datos: NuevoServicio) =>
+  peticion<Servicio>('/servicios', { metodo: 'POST', cuerpo: { ...datos, fotos: [] } })
+
+export const editarServicio = (id: string, cambios: CambiosServicio) =>
+  peticion<Servicio>(`/servicios/${encodeURIComponent(id)}`, { metodo: 'PATCH', cuerpo: cambios })
+
+/** Borra el servicio y sus fotos. Responde 204. */
+export const eliminarServicio = (id: string) =>
+  peticion<null>(`/servicios/${encodeURIComponent(id)}`, { metodo: 'DELETE' })
+
+/** La imagen va cruda (no multipart), con su Content-Type real. Máximo 3 fotos por servicio. */
+export const subirFotoServicio = (servicioId: string, imagen: Blob) =>
+  peticion<FotoServicio>(`/servicios/${encodeURIComponent(servicioId)}/fotos`, { metodo: 'POST', binario: imagen })
+
+export const eliminarFoto = (fotoId: string) =>
+  peticion<null>(`/fotos/${encodeURIComponent(fotoId)}`, { metodo: 'DELETE' })
