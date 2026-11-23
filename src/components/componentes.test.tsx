@@ -63,7 +63,13 @@ describe('AvisoActualizacion', () => {
     estado.hayNueva = true
     render(<AvisoActualizacion />)
     expect(screen.getByText('Hay una versión nueva')).toBeInTheDocument()
+    const waiting = { postMessage: vi.fn() }
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: { addEventListener: vi.fn(), getRegistration: vi.fn().mockResolvedValue({ waiting }) },
+    })
     await userEvent.click(screen.getByRole('button', { name: 'Actualizar' }))
     expect(estado.actualizar).toHaveBeenCalledWith(true)
+    expect(screen.getByRole('button', { name: /Actualizando/ })).toBeDisabled()
   })
 })
